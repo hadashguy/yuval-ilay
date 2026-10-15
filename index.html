@@ -386,6 +386,12 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
           </div>
         </div>
 
+        <div class="field" id="f-phone">
+          <label for="phone">טלפון</label>
+          <p class="hint">כדי שנוכל לעדכן אתכם אם משהו משתנה ביום האירוע.</p>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+        </div>
+
         <div class="field" id="f-plusone">
           <label class="choice" for="plusOne">
             <input type="checkbox" id="plusOne">
@@ -446,6 +452,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
       <div class="perf"></div>
       <dl class="pass-rows">
         <div class="pass-row"><dt>תחנת עלייה</dt><dd id="donePickup"></dd></div>
+        <div class="pass-row"><dt>טלפון</dt><dd id="donePhone"></dd></div>
         <div class="pass-row" id="donePartnerRow" hidden><dt>מגיע/ה עם</dt><dd id="donePartner"></dd></div>
         <div class="pass-row" id="doneSecondRow" hidden><dt>עדיפות שנייה</dt><dd id="doneSecond"></dd></div>
         <div class="pass-row"><dt>הסעה חזור</dt><dd id="doneReturn"></dd></div>
@@ -618,18 +625,22 @@ const CONFIG = {
 
   function clearMarks() {
     errorEl.hidden = true;
-    ['f-first', 'f-last', 'f-plusone', 'f-pickup', 'f-return'].forEach((id) => $(id).classList.remove('invalid'));
+    ['f-first', 'f-last', 'f-phone', 'f-plusone', 'f-pickup', 'f-return'].forEach((id) => $(id).classList.remove('invalid'));
   }
 
   function collect() {
     const firstName = $('firstName').value.trim();
     const lastName = $('lastName').value.trim();
+    const phone = $('phone').value.trim();
+    const digits = phone.replace(/\D/g, '');
     const partner = plusOne.checked ? partnerName.value.trim() : '';
     const pickupFirst = form.querySelector('input[name="pickupFirst"]:checked');
     const returnRide = form.querySelector('input[name="returnRide"]:checked');
 
     if (!firstName) { $('f-first').classList.add('invalid'); showError('צריך למלא שם פרטי.', $('firstName')); return null; }
     if (!lastName)  { $('f-last').classList.add('invalid');  showError('צריך למלא שם משפחה.', $('lastName')); return null; }
+    if (!phone) { $('f-phone').classList.add('invalid'); showError('צריך למלא מספר טלפון.', $('phone')); return null; }
+    if (digits.length < 9 || digits.length > 15) { $('f-phone').classList.add('invalid'); showError('מספר הטלפון לא נראה תקין — בדקו אותו שוב.', $('phone')); return null; }
     if (plusOne.checked && !partner) { $('f-plusone').classList.add('invalid'); showError('מלאו את שם בן/בת הזוג, או הסירו את הסימון.', partnerName); return null; }
     if (!pickupFirst) { $('f-pickup').classList.add('invalid'); showError('בחרו תחנת עלייה אחת.', $('pickup-0')); return null; }
     if (!returnRide)  { $('f-return').classList.add('invalid'); showError('ענו אם צריך גם הסעה חזור.'); return null; }
@@ -643,6 +654,7 @@ const CONFIG = {
     return {
       firstName: firstName,
       lastName: lastName,
+      phone: phone,
       partnerName: partner,
       pickupFirst: pickupFirst.value,
       pickupSecond: pickupSecond,
@@ -677,6 +689,7 @@ const CONFIG = {
 
   function showPass(payload) {
     $('doneName').textContent = payload.firstName + ' ' + payload.lastName;
+    $('donePhone').textContent = payload.phone;
     if (payload.partnerName) {
       $('donePartner').textContent = payload.partnerName;
       $('donePartnerRow').hidden = false;

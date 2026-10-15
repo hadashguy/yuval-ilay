@@ -4,7 +4,7 @@
  */
 
 const SHEET_NAME = 'הרשמות';
-const HEADERS = ['חותמת זמן', 'שם פרטי', 'שם משפחה', 'בן/בת זוג', 'מקומות',
+const HEADERS = ['חותמת זמן', 'שם פרטי', 'שם משפחה', 'טלפון', 'בן/בת זוג', 'מקומות',
                  'עדיפות ראשונה', 'עדיפות שנייה', 'הסעה חזור'];
 
 function doPost(e) {
@@ -17,6 +17,7 @@ function doPost(e) {
       new Date(),
       clean(data.firstName),
       clean(data.lastName),
+      clean(data.phone, 30),
       partner,
       partner ? 2 : 1,   // מקומות — נגזר כאן ולא נשלח מהדפדפן
       clean(data.pickupFirst, 200),
@@ -60,8 +61,10 @@ function getSheet() {
     sheet.setFrozenRows(1);
     sheet.setRightToLeft(true);
     sheet.setColumnWidth(1, 150);
-    sheet.setColumnWidth(6, 260);
     sheet.setColumnWidth(7, 260);
+    sheet.setColumnWidth(8, 260);
+    // טלפון כטקסט, אחרת שיטס מפרש 0523403625 כמספר ומוחק את ה-0 שבהתחלה
+    sheet.getRange('D:D').setNumberFormat('@');
   }
   return sheet;
 }
