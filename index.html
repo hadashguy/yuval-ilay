@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="הרשמה להסעה לחתונה של יובל ועילאי, יום שלישי 20.10.2026 באולם ADIA ביבנה.">
 
 <!-- תצוגה מקדימה בוואטסאפ, פייסבוק וטלגרם. הכתובות כאן חייבות להיות מלאות
@@ -334,7 +335,9 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 .pass-row:last-child{border-bottom:0}
 .pass-row dt{font-size:.8rem;color:var(--muted);font-weight:600;flex:none}
 .pass-row dd{margin:0;font-weight:700;text-align:left;min-width:0}
-.pass-foot{padding:0 20px 24px;margin:0;font-size:.86rem;color:var(--muted)}
+.pass-foot{padding:0 20px 24px;display:grid;gap:7px;font-size:.86rem;color:var(--muted)}
+.pass-foot p{margin:0}
+.foot-note a,.pass-foot a{color:var(--sage);font-weight:600;white-space:nowrap}
 
 .fade-in{animation:fade .34s ease both}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -429,7 +432,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
       <div class="ticket-foot">
         <p class="error" id="error" role="alert" hidden></p>
         <button class="btn-submit" id="submit" type="submit">שליחת ההרשמה</button>
-        <p class="foot-note">אפשר לשנות אחר כך — פשוט תשלחו הודעה.</p>
+        <p class="foot-note" id="footNote"></p>
       </div>
     </form>
   </section>
@@ -449,7 +452,10 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
         <div class="pass-row"><dt>מועד</dt><dd id="doneDate"></dd></div>
         <div class="pass-row" id="doneVenueRow" hidden><dt>יעד</dt><dd id="doneVenue"></dd></div>
       </dl>
-      <p class="pass-foot" id="doneFoot">נתראה באירוע. השעה המדויקת של התחנה תישלח לפני החתונה.</p>
+      <div class="pass-foot">
+        <p id="doneFoot">נתראה באירוע. השעה המדויקת של התחנה תישלח לפני החתונה.</p>
+        <p id="doneContact"></p>
+      </div>
     </div>
   </section>
 
@@ -478,6 +484,10 @@ const CONFIG = {
     'כיכר רבין',
     'מנחם בגין 152'
   ],
+
+  // מי לפנות אליו לשינוי או ביטול. הקישור לחיוג נגזר מהמספר אוטומטית.
+  contactName: 'גיא חדש',
+  contactPhone: '052-340-3625',
 
   // הערה קטנה מתחת לשאלה על הסעה חזור
   returnNote: 'ההסעה חזור יוצאת בסוף האירוע, בסביבות 02:30.',
@@ -561,6 +571,19 @@ const CONFIG = {
       if (second.value === picked.value) second.value = '';
     });
   }
+
+  // --- פרטי קשר לשינויים, באותו נוסח בטופס ובאישור ---
+  function contactLine(lead) {
+    const frag = document.createDocumentFragment();
+    frag.append(lead + ' ' + CONFIG.contactName + ' · ');
+    const tel = document.createElement('a');
+    tel.href = 'tel:' + CONFIG.contactPhone.replace(/\D/g, '');
+    tel.textContent = CONFIG.contactPhone;
+    frag.append(tel);
+    return frag;
+  }
+  $('footNote').replaceChildren(contactLine('רוצים לשנות משהו אחר כך?'));
+  $('doneContact').replaceChildren(contactLine('לשינוי או ביטול:'));
 
   // --- פלוס אחד: שדה השם נפתח רק כשמסמנים ---
   const plusOne = $('plusOne');
