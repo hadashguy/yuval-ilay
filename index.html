@@ -168,7 +168,6 @@ body{
 }
 .btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px -14px rgba(20,48,78,.95)}
 .btn-primary:active{transform:translateY(1px)}
-.cta-sub{margin:0;font-size:.82rem;color:var(--muted)}
 
 /* ---------- הטופס ---------- */
 .sheet{padding-block:34px 56px}
@@ -374,7 +373,6 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
           <span class="venue" id="venue"></span>
         </p>
         <button class="btn-primary" id="openForm" type="button">הרשמה להסעה</button>
-        <p class="cta-sub">לוקח פחות מדקה</p>
       </div>
     </div>
   </section>
@@ -387,7 +385,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 
       <div class="ticket-body">
         <p class="notice">
-          <strong>עוד לא סגרנו אם יהיו הסעות ומאיפה</strong> — אנחנו קודם בודקים אם יש ביקוש.
+          <strong>עוד לא סגרנו מאיפה יהיו ההסעות</strong> — אנחנו קודם בודקים איפה יש ביקוש.
           מה שתמלאו כאן עוזר לנו להחליט ולא מחייב אתכם בכלום. ברגע שנדע, נעדכן את כולם בהודעה.
         </p>
 
@@ -404,7 +402,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 
         <div class="field" id="f-phone">
           <label for="phone">טלפון</label>
-          <p class="hint">כדי לעדכן אתכם אם ההסעה יוצאת לפועל, ומאיפה.</p>
+          <p class="hint">כדי לעדכן אתכם מאיפה ובאיזו שעה ההסעה יוצאת.</p>
           <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
         </div>
 
@@ -476,7 +474,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
         <div class="pass-row" id="doneVenueRow" hidden><dt>יעד</dt><dd id="doneVenue"></dd></div>
       </dl>
       <div class="pass-foot">
-        <p id="doneFoot">נעדכן אתכם בהודעה ברגע שנדע אם ההסעה יוצאת ומאיפה.</p>
+        <p id="doneFoot">נעדכן אתכם בהודעה ברגע שנדע מאיפה ובאיזו שעה ההסעה יוצאת.</p>
         <p id="doneContact"></p>
       </div>
     </div>
@@ -513,7 +511,7 @@ const CONFIG = {
   contactPhone: '052-340-3625',
 
   // הערה קטנה מתחת לשאלה על הסעה חזור
-  returnNote: 'אם תהיה הסעה חזור, היא תצא בסוף האירוע — בסביבות 02:30.',
+  returnNote: 'ההסעה חזור תצא בסוף האירוע, בסביבות 02:00.',
 
   // כתובת ה-Web App של Google Apps Script.
   // כל עוד זה ריק — הדף במצב תצוגה מקדימה ולא שומר כלום.
