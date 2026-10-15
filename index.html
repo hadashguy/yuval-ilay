@@ -294,7 +294,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 }
 .btn-submit:hover{filter:brightness(1.07)}
 .btn-submit[disabled]{opacity:.6;cursor:progress}
-.foot-note{margin:0;font-size:.82rem;color:var(--muted);text-align:center}
+.foot-note{margin:0;font-size:.82rem;line-height:1.7;color:var(--muted);text-align:center}
 .error{
   margin:0;
   color:var(--danger);
@@ -582,9 +582,10 @@ const CONFIG = {
   }
 
   // --- פרטי קשר לשינויים, באותו נוסח בטופס ובאישור ---
-  function contactLine(lead) {
+  function contactLine(question) {
     const frag = document.createDocumentFragment();
-    frag.append(lead + ' ' + CONFIG.contactName + ' · ');
+    frag.append(question, document.createElement('br'));
+    frag.append('דברו עם: ' + CONFIG.contactName + ' · ');
     const tel = document.createElement('a');
     tel.href = 'tel:' + CONFIG.contactPhone.replace(/\D/g, '');
     tel.textContent = CONFIG.contactPhone;
@@ -592,7 +593,7 @@ const CONFIG = {
     return frag;
   }
   $('footNote').replaceChildren(contactLine('רוצים לשנות משהו אחר כך?'));
-  $('doneContact').replaceChildren(contactLine('לשינוי או ביטול:'));
+  $('doneContact').replaceChildren(contactLine('רוצים לשנות או לבטל?'));
 
   // --- פלוס אחד: שדה השם נפתח רק כשמסמנים ---
   const plusOne = $('plusOne');
