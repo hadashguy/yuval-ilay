@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- ===== ARTIFACT-HEAD-START ===== -->
+<title>הסעות יובל ועילאי</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Secular+One&display=swap">
+<style>
+/* פריסה: הפוסטר שלם בתוך כרטיס, הפרטים והכפתור ברצועה שממשיכה אותו, והטופס נפתח מתחת. */
+:root{
+  --paper:#f7f1e2;      /* קרם חם, כמו הבאנר בפוסטר */
+  --card:#fffcf2;       /* כרטיס מורם */
+  --ink:#16314f;        /* נייבי של הכותרת בפוסטר */
+  --muted:#6d7f92;      /* טקסט משני */
+  --sage:#1b3a63;       /* נייבי מלא — כפתורים ואישור */
+  --sage-soft:#e5ecf4;  /* מילוי רך */
+  --brass:#bf8c1e;      /* זהב של השקיעה */
+  --line:#e2d8bf;       /* קווי הפרדה */
+  --on-sage:#fdf8ea;    /* טקסט על רקע נייבי */
+  --danger:#9d3b2f;
+  --shadow:0 18px 40px -22px rgba(28,35,33,.45);
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1824; --card:#17222f; --ink:#eaf0f7; --muted:#92a4b6;
+    --sage:#8fb6e0; --sage-soft:#1d2c3d; --brass:#e5b955; --line:#2a3848;
+    --on-sage:#0c1927; --danger:#e09184;
+    --shadow:0 18px 40px -22px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1824; --card:#17222f; --ink:#eaf0f7; --muted:#92a4b6;
+  --sage:#8fb6e0; --sage-soft:#1d2c3d; --brass:#e5b955; --line:#2a3848;
+  --on-sage:#0c1927; --danger:#e09184;
+  --shadow:0 18px 40px -22px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-text-size-adjust:100%;
+}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.gutter{
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+
+/* ---------- באנר תצוגה מקדימה ---------- */
+.preview-note{
+  background:var(--sage-soft);
+  color:var(--ink);
+  border-bottom:1px solid var(--line);
+  font-size:.82rem;
+  font-weight:600;
+  text-align:center;
+  padding-block:8px;
+}
+
+/* ---------- מסך פתיחה ---------- */
+/* הפוסטר כבר נושא את הכותרת והקריאה לפעולה, לכן הוא מוצג שלם ולא נחתך,
+   והפרטים והכפתור יושבים ברצועה שממשיכה אותו. */
+.hero{
+  min-height:calc(100svh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+  display:grid;
+  place-items:center;
+  padding-block:14px 20px;
+}
+.poster-card{
+  width:100%;
+  max-width:30rem;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto;
+}
+.poster{
+  width:100%;
+  height:100%;
+  max-height:60svh;
+  object-fit:contain;
+  background:#f3e9d4;
+}
+.poster-fallback{
+  min-height:32svh;
+  display:grid;
+  place-items:center;
+  padding:30px;
+  text-align:center;
+  background:radial-gradient(125% 95% at 72% 8%, #f6c76d 0%, #e3914d 46%, #1d3c62 100%);
+  color:#fff8e7;
+  font-family:"Secular One","Arial Hebrew",Arial,sans-serif;
+  font-size:clamp(1.3rem,5.9vw,1.7rem);
+  font-weight:400;
+  line-height:1.3;
+  text-shadow:0 2px 14px rgba(0,0,0,.35);
+}
+.hero-band{
+  border-top:1px solid var(--line);
+  padding-block:18px 20px;
+  display:grid;
+  justify-items:center;
+  gap:10px;
+  text-align:center;
+}
+.names{
+  font-family:"Secular One","Arial Hebrew",Arial,sans-serif;
+  font-weight:400;
+  font-size:clamp(1.6rem,6.4vw,2.1rem);
+  line-height:1.2;
+  margin:0;
+  color:var(--ink);
+  text-wrap:balance;
+}
+.hero-meta{margin:0;font-size:.93rem;color:var(--muted);line-height:1.45}
+.hero-meta .venue{display:block}
+.btn-primary{
+  font:inherit;
+  font-weight:700;
+  font-size:1.06rem;
+  color:#14304e;
+  background:linear-gradient(180deg,#f8dc9a,#e8bf62);
+  border:1px solid #cfa445;
+  border-radius:999px;
+  padding:15px 40px;
+  min-height:52px;
+  margin-top:4px;
+  cursor:pointer;
+  box-shadow:0 10px 24px -14px rgba(20,48,78,.9);
+  transition:transform .14s ease, box-shadow .14s ease;
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px -14px rgba(20,48,78,.95)}
+.btn-primary:active{transform:translateY(1px)}
+.cta-sub{margin:0;font-size:.82rem;color:var(--muted)}
+
+/* ---------- הטופס ---------- */
+.sheet{padding-block:34px 56px}
+.ticket{
+  max-width:34rem;
+  margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  position:relative;
+  padding:0;
+}
+.ticket-head{
+  padding:22px 20px 18px;
+  border-bottom:1px dashed var(--line);
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.ticket-head h2{
+  font-family:"Secular One","Arial Hebrew",Arial,sans-serif;
+  font-weight:400;
+  font-size:1.4rem;
+  line-height:1.3;
+  margin:0;
+}
+.ticket-body{padding:20px;display:grid;gap:24px}
+
+.field{display:grid;gap:7px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:420px){.row2{grid-template-columns:1fr}}
+label,legend{font-weight:700;font-size:.92rem}
+legend{padding:0;margin-bottom:9px}
+.hint{font-size:.82rem;color:var(--muted);font-weight:400;margin:0}
+input[type="text"],select{
+  font:inherit;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:12px 13px;
+  min-height:46px;
+  width:100%;
+  min-width:0;
+}
+input[type="text"]:focus,select:focus{border-color:var(--sage)}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+
+/* רשימת מיקומים */
+.choices{display:grid;gap:9px}
+.choice{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:13px 14px;
+  background:var(--paper);
+  cursor:pointer;
+  transition:border-color .12s ease, background .12s ease;
+}
+.choice:hover{border-color:var(--sage)}
+.choice input{accent-color:var(--sage);width:19px;height:19px;margin:0;flex:none}
+.choice{margin:0}
+.choice span{min-width:0}
+.choice:has(input:checked){border-color:var(--sage);background:var(--sage-soft)}
+.choice-num{
+  font-family:"Secular One","Arial Hebrew",Arial,sans-serif;
+  color:var(--brass);
+  font-weight:400;
+  flex:none;
+  width:1.4em;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+}
+
+/* כן / לא */
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{
+  flex:1 1 9rem;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 12px;
+  background:var(--paper);
+  font-weight:600;
+  cursor:pointer;
+}
+.pill input{position:absolute;opacity:0;pointer-events:none}
+.pill:has(input:checked){border-color:var(--sage);background:var(--sage-soft);color:var(--ink)}
+.pill:has(input:checked)::before{content:"✓";color:var(--sage);font-weight:700}
+
+.field.nested{
+  margin-top:2px;
+  padding-inline-start:14px;
+  border-inline-start:2px solid var(--line);
+}
+.ticket-foot{
+  border-top:1px dashed var(--line);
+  padding:20px;
+  display:grid;
+  gap:12px;
+}
+.btn-submit{
+  font:inherit;font-weight:700;font-size:1.02rem;
+  background:var(--sage);
+  color:var(--on-sage);
+  border:1px solid var(--sage);
+  border-radius:999px;
+  padding:14px 28px;
+  min-height:52px;
+  cursor:pointer;
+}
+.btn-submit:hover{filter:brightness(1.07)}
+.btn-submit[disabled]{opacity:.6;cursor:progress}
+.foot-note{margin:0;font-size:.82rem;color:var(--muted);text-align:center}
+.error{
+  margin:0;
+  color:var(--danger);
+  font-size:.88rem;
+  font-weight:600;
+}
+.invalid input[type="text"],.invalid select{border-color:var(--danger)}
+.invalid.field > .choice{border-color:var(--danger)}
+
+/* ---------- אישור ---------- */
+.done{padding-block:40px 60px}
+.pass{
+  max-width:34rem;margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.pass-top{
+  background:var(--sage);
+  color:var(--on-sage);
+  padding:22px 20px;
+}
+.pass-top p{margin:0;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+.pass-top h2{margin:.4rem 0 0;font-family:"Secular One","Arial Hebrew",Arial,sans-serif;font-size:1.5rem;font-weight:400;line-height:1.3}
+.perf{
+  height:14px;
+  background:
+    radial-gradient(circle at 7px 7px, var(--paper) 7px, transparent 7.5px) left center/14px 14px no-repeat,
+    radial-gradient(circle at 7px 7px, var(--paper) 7px, transparent 7.5px) right center/14px 14px no-repeat,
+    repeating-linear-gradient(to right, var(--line) 0 6px, transparent 6px 12px) center/100% 1px no-repeat;
+}
+.pass-rows{padding:4px 20px 20px;display:grid}
+.pass-row{
+  display:flex;gap:14px;justify-content:space-between;align-items:baseline;
+  padding-block:13px;
+  border-bottom:1px solid var(--line);
+}
+.pass-row:last-child{border-bottom:0}
+.pass-row dt{font-size:.8rem;color:var(--muted);font-weight:600;flex:none}
+.pass-row dd{margin:0;font-weight:700;text-align:left;min-width:0}
+.pass-foot{padding:0 20px 24px;margin:0;font-size:.86rem;color:var(--muted)}
+
+.fade-in{animation:fade .34s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+</style>
+<!-- ===== ARTIFACT-HEAD-END ===== -->
+</head>
+<body>
+<!-- ===== ARTIFACT-BODY-START ===== -->
+<div id="app" dir="rtl" lang="he">
+
+  <p class="preview-note" id="previewNote" hidden>
+    תצוגה מקדימה — ההרשמות בגרסה הזו לא נשמרות בשום מקום
+  </p>
+
+  <section class="hero gutter" id="hero">
+    <div class="poster-card">
+      <img class="poster" id="heroImg" alt="היום הגדול הגיע! מומלץ להירשם להסעה">
+      <div class="poster-fallback" id="heroFallback" hidden>היום הגדול הגיע!</div>
+      <div class="hero-band gutter">
+        <h1 class="names" id="names"></h1>
+        <p class="hero-meta">
+          <span id="eventDate"></span>
+          <span class="venue" id="venue"></span>
+        </p>
+        <button class="btn-primary" id="openForm" type="button">הרשמה להסעה</button>
+        <p class="cta-sub">לוקח פחות מדקה</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet gutter" id="sheet" hidden>
+    <form class="ticket" id="form" novalidate>
+      <div class="ticket-head">
+        <h2>פרטי הנרשם</h2>
+      </div>
+
+      <div class="ticket-body">
+        <div class="row2">
+          <div class="field" id="f-first">
+            <label for="firstName">שם פרטי</label>
+            <input id="firstName" name="firstName" type="text" autocomplete="given-name" required>
+          </div>
+          <div class="field" id="f-last">
+            <label for="lastName">שם משפחה</label>
+            <input id="lastName" name="lastName" type="text" autocomplete="family-name" required>
+          </div>
+        </div>
+
+        <div class="field" id="f-plusone">
+          <label class="choice" for="plusOne">
+            <input type="checkbox" id="plusOne">
+            <span>מגיע/ה עם בן/בת זוג</span>
+          </label>
+          <div class="field nested" id="partnerField" hidden>
+            <label for="partnerName">שם בן/בת הזוג</label>
+            <p class="hint">נוסע/ת איתך מאותה תחנה, ותופס/ת מקום נוסף בהסעה.</p>
+            <input id="partnerName" name="partnerName" type="text" autocomplete="off">
+          </div>
+        </div>
+
+        <fieldset id="f-pickup">
+          <legend>מאיפה נוח לך לעלות?</legend>
+          <p class="hint">זו התחנה שננסה לשבץ לך.</p>
+          <div class="choices" id="pickupChoices"></div>
+        </fieldset>
+
+        <div class="field" id="secondCheckField" hidden>
+          <label class="choice" for="flexible">
+            <input type="checkbox" id="flexible">
+            <span>אני יכול להתפשר גם על התחנה השניה :)</span>
+          </label>
+        </div>
+
+        <div class="field" id="secondSelectField" hidden>
+          <label for="pickupSecond">עדיפות שנייה <span class="hint">(לא חייב)</span></label>
+          <p class="hint">אם התחנה הראשונה תתמלא, ננסה את זו.</p>
+          <select id="pickupSecond" name="pickupSecond">
+            <option value="">אין העדפה שנייה</option>
+          </select>
+        </div>
+
+        <fieldset id="f-return">
+          <legend>צריך גם הסעה חזור?</legend>
+          <p class="hint" id="returnNote"></p>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="returnRide" value="yes" required><span>כן, גם חזור</span></label>
+            <label class="pill"><input type="radio" name="returnRide" value="no" required><span>לא, רק הלוך</span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="ticket-foot">
+        <p class="error" id="error" role="alert" hidden></p>
+        <button class="btn-submit" id="submit" type="submit">שליחת ההרשמה</button>
+        <p class="foot-note">אפשר לשנות אחר כך — פשוט תשלחו הודעה.</p>
+      </div>
+    </form>
+  </section>
+
+  <section class="done gutter" id="done" hidden>
+    <div class="pass">
+      <div class="pass-top">
+        <p>ההרשמה נקלטה</p>
+        <h2 id="doneName">נרשמת להסעה</h2>
+      </div>
+      <div class="perf"></div>
+      <dl class="pass-rows">
+        <div class="pass-row"><dt>תחנת עלייה</dt><dd id="donePickup"></dd></div>
+        <div class="pass-row" id="donePartnerRow" hidden><dt>מגיע/ה עם</dt><dd id="donePartner"></dd></div>
+        <div class="pass-row" id="doneSecondRow" hidden><dt>עדיפות שנייה</dt><dd id="doneSecond"></dd></div>
+        <div class="pass-row"><dt>הסעה חזור</dt><dd id="doneReturn"></dd></div>
+        <div class="pass-row"><dt>מועד</dt><dd id="doneDate"></dd></div>
+        <div class="pass-row" id="doneVenueRow" hidden><dt>יעד</dt><dd id="doneVenue"></dd></div>
+      </dl>
+      <p class="pass-foot" id="doneFoot">נתראה באירוע. השעה המדויקת של התחנה תישלח לפני החתונה.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* =======================================================================
+   כל מה שצריך לשנות נמצא כאן, ב-CONFIG. אין צורך לגעת בשאר הקוד.
+   ======================================================================= */
+const CONFIG = {
+  // שמות החתן והכלה
+  coupleNames: 'יובל & עילאי',
+
+  // תאריך ומקום. venue אפשר להשאיר ריק — אז הוא פשוט לא יוצג.
+  eventDate: 'יום שלישי, 20 באוקטובר 2026',
+  venue: 'אולם ADIA, יבנה',
+
+  // התמונה: שימו קובץ בשם hero.jpg באותה תיקייה של הדף.
+  // אפשר גם כתובת מלאה: 'https://.../photo.jpg'
+  heroImage: 'hero.jpg',
+
+  // תחנות העלייה, לפי הסדר שבו יוצגו
+  // שתי תחנות ⇐ הדף מציג סימון "גם השנייה מתאימה לי".
+  // שלוש ומעלה ⇐ הוא עובר אוטומטית לתפריט עדיפות שנייה.
+  locations: [
+    'כיכר רבין',
+    'מנחם בגין 152'
+  ],
+
+  // הערה קטנה מתחת לשאלה על הסעה חזור
+  returnNote: 'ההסעה חזור יוצאת בסוף האירוע, בסביבות 00:30.',
+
+  // כתובת ה-Web App של Google Apps Script.
+  // כל עוד זה ריק — הדף במצב תצוגה מקדימה ולא שומר כלום.
+  endpoint: ''
+};
+
+/* ======================= מכאן והלאה: המנגנון ======================= */
+(function () {
+  'use strict';
+
+  const $ = (id) => document.getElementById(id);
+  const demo = !CONFIG.endpoint;
+
+  // --- מילוי התוכן מתוך CONFIG ---
+  $('previewNote').hidden = !demo;
+  $('names').textContent = CONFIG.coupleNames;
+  $('eventDate').textContent = CONFIG.eventDate;
+  $('venue').textContent = CONFIG.venue;
+  $('venue').hidden = !CONFIG.venue;
+  $('doneVenue').textContent = CONFIG.venue;
+  $('doneVenueRow').hidden = !CONFIG.venue;
+  $('returnNote').textContent = CONFIG.returnNote;
+  $('doneDate').textContent = CONFIG.eventDate;
+
+  // אם התמונה חסרה או לא נטענת, מוצג רקע חלופי במקום ריבוע שבור.
+  const heroImg = $('heroImg');
+  const heroFallback = $('heroFallback');
+  function useFallback() {
+    heroImg.hidden = true;
+    heroFallback.hidden = false;
+  }
+  if (CONFIG.heroImage) {
+    heroImg.addEventListener('error', useFallback, { once: true });
+    heroImg.src = CONFIG.heroImage;
+  } else {
+    useFallback();
+  }
+
+  const choices = $('pickupChoices');
+  const second = $('pickupSecond');
+  const twoStops = CONFIG.locations.length === 2;
+
+  CONFIG.locations.forEach((loc, i) => {
+    const label = document.createElement('label');
+    label.className = 'choice';
+
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'pickupFirst';
+    radio.value = loc;
+    radio.required = true;
+    radio.id = 'pickup-' + i;
+
+    const text = document.createElement('span');
+    text.textContent = loc;
+
+    label.append(radio, text);
+    choices.append(label);
+
+    const opt = document.createElement('option');
+    opt.value = loc;
+    opt.textContent = loc;
+    second.append(opt);
+  });
+
+  // שתי תחנות: סימון אחד. שלוש ומעלה: תפריט, בלי לאפשר לבחור
+  // פעמיים באותה תחנה.
+  if (twoStops) {
+    $('secondCheckField').hidden = false;
+  } else {
+    $('secondSelectField').hidden = false;
+    choices.addEventListener('change', () => {
+      const picked = choices.querySelector('input[name="pickupFirst"]:checked');
+      if (!picked) return;
+      Array.prototype.forEach.call(second.options, (opt) => {
+        opt.disabled = opt.value !== '' && opt.value === picked.value;
+      });
+      if (second.value === picked.value) second.value = '';
+    });
+  }
+
+  // --- פלוס אחד: שדה השם נפתח רק כשמסמנים ---
+  const plusOne = $('plusOne');
+  const partnerField = $('partnerField');
+  const partnerName = $('partnerName');
+  plusOne.addEventListener('change', () => {
+    partnerField.hidden = !plusOne.checked;
+    if (plusOne.checked) partnerName.focus();
+    else partnerName.value = '';
+  });
+
+  // --- מעבר ממסך הפתיחה לטופס ---
+  const sheet = $('sheet');
+  $('openForm').addEventListener('click', () => {
+    sheet.hidden = false;
+    sheet.classList.add('fade-in');
+    sheet.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => $('firstName').focus({ preventScroll: true }), 420);
+  });
+
+  // --- שליחה ---
+  const form = $('form');
+  const errorEl = $('error');
+  const submitBtn = $('submit');
+  let sending = false;
+
+  function showError(msg, focusEl) {
+    errorEl.textContent = msg;
+    errorEl.hidden = false;
+    if (focusEl) focusEl.focus();
+  }
+
+  function clearMarks() {
+    errorEl.hidden = true;
+    ['f-first', 'f-last', 'f-plusone', 'f-pickup', 'f-return'].forEach((id) => $(id).classList.remove('invalid'));
+  }
+
+  function collect() {
+    const firstName = $('firstName').value.trim();
+    const lastName = $('lastName').value.trim();
+    const partner = plusOne.checked ? partnerName.value.trim() : '';
+    const pickupFirst = form.querySelector('input[name="pickupFirst"]:checked');
+    const returnRide = form.querySelector('input[name="returnRide"]:checked');
+
+    if (!firstName) { $('f-first').classList.add('invalid'); showError('צריך למלא שם פרטי.', $('firstName')); return null; }
+    if (!lastName)  { $('f-last').classList.add('invalid');  showError('צריך למלא שם משפחה.', $('lastName')); return null; }
+    if (plusOne.checked && !partner) { $('f-plusone').classList.add('invalid'); showError('מלאו את שם בן/בת הזוג, או הסירו את הסימון.', partnerName); return null; }
+    if (!pickupFirst) { $('f-pickup').classList.add('invalid'); showError('בחרו תחנת עלייה אחת.', $('pickup-0')); return null; }
+    if (!returnRide)  { $('f-return').classList.add('invalid'); showError('ענו אם צריך גם הסעה חזור.'); return null; }
+
+    // עם שתי תחנות, "גם השנייה מתאימה" פירושו התחנה האחרת —
+    // כך העמודה בגיליון נשארת זהה בשני המצבים.
+    const pickupSecond = twoStops
+      ? ($('flexible').checked ? (CONFIG.locations.find((l) => l !== pickupFirst.value) || '') : '')
+      : second.value;
+
+    return {
+      firstName: firstName,
+      lastName: lastName,
+      partnerName: partner,
+      pickupFirst: pickupFirst.value,
+      pickupSecond: pickupSecond,
+      returnRide: returnRide.value
+    };
+  }
+
+  async function send(payload) {
+    if (demo) {
+      await new Promise((r) => setTimeout(r, 500));
+      return;
+    }
+    try {
+      const res = await fetch(CONFIG.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json().catch(() => ({ ok: true }));
+      if (data && data.ok === false) throw new Error(data.error || 'server');
+      return;
+    } catch (first) {
+      // חסימת CORS או תקלת רשת — ניסיון שליחה "עיוור", בלי קריאת התשובה.
+      await fetch(CONFIG.endpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams(payload)
+      });
+    }
+  }
+
+  function showPass(payload) {
+    $('doneName').textContent = payload.firstName + ' ' + payload.lastName;
+    if (payload.partnerName) {
+      $('donePartner').textContent = payload.partnerName;
+      $('donePartnerRow').hidden = false;
+    }
+    $('donePickup').textContent = payload.pickupFirst;
+    if (payload.pickupSecond) {
+      $('doneSecond').textContent = payload.pickupSecond;
+      $('doneSecondRow').querySelector('dt').textContent = twoStops ? 'גם מתאים' : 'עדיפות שנייה';
+      $('doneSecondRow').hidden = false;
+    }
+    $('doneReturn').textContent = payload.returnRide === 'yes' ? 'כן — בסוף האירוע' : 'לא, רק הלוך';
+    if (demo) $('doneFoot').textContent = 'תצוגה מקדימה: ההרשמה הזו לא נשמרה.';
+
+    $('hero').hidden = true;
+    sheet.hidden = true;
+    const done = $('done');
+    done.hidden = false;
+    done.classList.add('fade-in');
+    window.scrollTo({ top: 0 });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (sending) return;
+    clearMarks();
+
+    const payload = collect();
+    if (!payload) return;
+
+    sending = true;
+    submitBtn.disabled = true;
+    const original = submitBtn.textContent;
+    submitBtn.textContent = 'שולח…';
+
+    try {
+      await send(payload);
+      showPass(payload);
+    } catch (err) {
+      showError('השליחה לא הצליחה. בדקו חיבור לאינטרנט ונסו שוב.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+    } finally {
+      sending = false;
+    }
+  });
+})();
+</script>
+<!-- ===== ARTIFACT-BODY-END ===== -->
+</body>
+</html>
