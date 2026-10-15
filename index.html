@@ -387,8 +387,8 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 
       <div class="ticket-body">
         <p class="notice">
-          ממלאים כדי שנדע כמה מקומות צריך בכל תחנה. זו <strong>העדפה ולא שיבוץ סופי</strong> —
-          אם תחנה תתמלא נעדכן אתכם מראש בהודעה, ואפשר לשנות בכל רגע.
+          <strong>עוד לא סגרנו אם יהיו הסעות ומאיפה</strong> — אנחנו קודם בודקים אם יש ביקוש.
+          מה שתמלאו כאן עוזר לנו להחליט ולא מחייב אתכם בכלום. ברגע שנדע, נעדכן את כולם בהודעה.
         </p>
 
         <div class="row2">
@@ -404,7 +404,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 
         <div class="field" id="f-phone">
           <label for="phone">טלפון</label>
-          <p class="hint">כדי שנוכל לעדכן אתכם אם משהו משתנה ביום האירוע.</p>
+          <p class="hint">כדי לעדכן אתכם אם ההסעה יוצאת לפועל, ומאיפה.</p>
           <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
         </div>
 
@@ -422,7 +422,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 
         <fieldset id="f-pickup">
           <legend>מאיפה הכי נוח לכם לעלות?</legend>
-          <p class="hint">נשתדל לשבץ לפי הבחירה — ואם לא נצליח, תדעו מראש.</p>
+          <p class="hint">לפי התשובות נחליט מאילו תחנות שווה לצאת.</p>
           <div class="choices" id="pickupChoices"></div>
         </fieldset>
 
@@ -462,12 +462,12 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
   <section class="done gutter" id="done" hidden>
     <div class="pass">
       <div class="pass-top">
-        <p>ההרשמה נקלטה</p>
+        <p>קיבלנו, תודה</p>
         <h2 id="doneName">נרשמת להסעה</h2>
       </div>
       <div class="perf"></div>
       <dl class="pass-rows">
-        <div class="pass-row"><dt>תחנת עלייה</dt><dd id="donePickup"></dd></div>
+        <div class="pass-row"><dt>תחנה מבוקשת</dt><dd id="donePickup"></dd></div>
         <div class="pass-row"><dt>טלפון</dt><dd id="donePhone"></dd></div>
         <div class="pass-row" id="donePartnerRow" hidden><dt>מגיע/ה עם</dt><dd id="donePartner"></dd></div>
         <div class="pass-row" id="doneSecondRow" hidden><dt>עדיפות שנייה</dt><dd id="doneSecond"></dd></div>
@@ -476,7 +476,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
         <div class="pass-row" id="doneVenueRow" hidden><dt>יעד</dt><dd id="doneVenue"></dd></div>
       </dl>
       <div class="pass-foot">
-        <p id="doneFoot">נתראה באירוע. נשלח לכם הודעה עם התחנה והשעה המדויקת לפני החתונה.</p>
+        <p id="doneFoot">נעדכן אתכם בהודעה ברגע שנדע אם ההסעה יוצאת ומאיפה.</p>
         <p id="doneContact"></p>
       </div>
     </div>
@@ -513,7 +513,7 @@ const CONFIG = {
   contactPhone: '052-340-3625',
 
   // הערה קטנה מתחת לשאלה על הסעה חזור
-  returnNote: 'ההסעה חזור יוצאת בסוף האירוע, בסביבות 02:30.',
+  returnNote: 'אם תהיה הסעה חזור, היא תצא בסוף האירוע — בסביבות 02:30.',
 
   // כתובת ה-Web App של Google Apps Script.
   // כל עוד זה ריק — הדף במצב תצוגה מקדימה ולא שומר כלום.
