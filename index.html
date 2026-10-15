@@ -206,7 +206,7 @@ body{
 label,legend{font-weight:700;font-size:.92rem}
 legend{padding:0;margin-bottom:9px}
 .hint{font-size:.82rem;color:var(--muted);font-weight:400;margin:0}
-input[type="text"],select{
+input[type="text"],input[type="tel"],select{
   font:inherit;
   color:var(--ink);
   background:var(--paper);
@@ -217,7 +217,9 @@ input[type="text"],select{
   width:100%;
   min-width:0;
 }
-input[type="text"]:focus,select:focus{border-color:var(--sage)}
+input[type="text"]:focus,input[type="tel"]:focus,select:focus{border-color:var(--sage)}
+/* ספרות ומקפים נקראים משמאל לימין, אבל השדה נשאר צמוד לימין כמו שאר הטופס */
+input[type="tel"]{direction:ltr;text-align:right}
 fieldset{border:0;padding:0;margin:0;min-width:0}
 
 /* רשימת מיקומים */
@@ -299,7 +301,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
   font-size:.88rem;
   font-weight:600;
 }
-.invalid input[type="text"],.invalid select{border-color:var(--danger)}
+.invalid input[type="text"],.invalid input[type="tel"],.invalid select{border-color:var(--danger)}
 .invalid.field > .choice{border-color:var(--danger)}
 
 /* ---------- אישור ---------- */
