@@ -200,6 +200,16 @@ body{
 }
 .ticket-body{padding:20px;display:grid;gap:24px}
 
+.notice{
+  margin:0;
+  padding:13px 15px;
+  border-radius:10px;
+  background:var(--sage-soft);
+  border:1px solid var(--line);
+  font-size:.88rem;
+  line-height:1.6;
+}
+.notice strong{font-weight:700}
 .field{display:grid;gap:7px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:420px){.row2{grid-template-columns:1fr}}
@@ -302,7 +312,6 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
   font-weight:600;
 }
 .invalid input[type="text"],.invalid input[type="tel"],.invalid select{border-color:var(--danger)}
-.invalid.field > .choice{border-color:var(--danger)}
 
 /* ---------- אישור ---------- */
 .done{padding-block:40px 60px}
@@ -373,10 +382,15 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
   <section class="sheet gutter" id="sheet" hidden>
     <form class="ticket" id="form" novalidate>
       <div class="ticket-head">
-        <h2>פרטי הנרשם</h2>
+        <h2>כמה פרטים קצרים</h2>
       </div>
 
       <div class="ticket-body">
+        <p class="notice">
+          ממלאים כדי שנדע כמה מקומות צריך בכל תחנה. זו <strong>העדפה ולא שיבוץ סופי</strong> —
+          אם תחנה תתמלא נעדכן אתכם מראש בהודעה, ואפשר לשנות בכל רגע.
+        </p>
+
         <div class="row2">
           <div class="field" id="f-first">
             <label for="firstName">שם פרטי</label>
@@ -400,15 +414,15 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
             <span>מגיע/ה עם בן/בת זוג</span>
           </label>
           <div class="field nested" id="partnerField" hidden>
-            <label for="partnerName">שם בן/בת הזוג</label>
-            <p class="hint">נוסע/ת איתך מאותה תחנה, ותופס/ת מקום נוסף בהסעה.</p>
+            <label for="partnerName">שם בן/בת הזוג <span class="hint">(אם כבר ידוע)</span></label>
+            <p class="hint">נוסע/ת איתכם מאותה תחנה, ותופס/ת מקום נוסף.</p>
             <input id="partnerName" name="partnerName" type="text" autocomplete="off">
           </div>
         </div>
 
         <fieldset id="f-pickup">
-          <legend>מאיפה נוח לך לעלות?</legend>
-          <p class="hint">זו התחנה שננסה לשבץ לך.</p>
+          <legend>מאיפה הכי נוח לכם לעלות?</legend>
+          <p class="hint">נשתדל לשבץ לפי הבחירה — ואם לא נצליח, תדעו מראש.</p>
           <div class="choices" id="pickupChoices"></div>
         </fieldset>
 
@@ -462,7 +476,7 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
         <div class="pass-row" id="doneVenueRow" hidden><dt>יעד</dt><dd id="doneVenue"></dd></div>
       </dl>
       <div class="pass-foot">
-        <p id="doneFoot">נתראה באירוע. השעה המדויקת של התחנה תישלח לפני החתונה.</p>
+        <p id="doneFoot">נתראה באירוע. נשלח לכם הודעה עם התחנה והשעה המדויקת לפני החתונה.</p>
         <p id="doneContact"></p>
       </div>
     </div>
@@ -628,7 +642,7 @@ const CONFIG = {
 
   function clearMarks() {
     errorEl.hidden = true;
-    ['f-first', 'f-last', 'f-phone', 'f-plusone', 'f-pickup', 'f-return'].forEach((id) => $(id).classList.remove('invalid'));
+    ['f-first', 'f-last', 'f-phone', 'f-pickup', 'f-return'].forEach((id) => $(id).classList.remove('invalid'));
   }
 
   function collect() {
@@ -636,7 +650,9 @@ const CONFIG = {
     const lastName = $('lastName').value.trim();
     const phone = $('phone').value.trim();
     const digits = phone.replace(/\D/g, '');
-    const partner = plusOne.checked ? partnerName.value.trim() : '';
+    // הסימון לבדו שומר את המקום. שם שלא מולא נרשם כ"בן/בת זוג",
+    // כדי שספירת המקומות בגיליון תצא נכון בלי לחייב אף אחד בשם.
+    const partner = plusOne.checked ? (partnerName.value.trim() || 'בן/בת זוג') : '';
     const pickupFirst = form.querySelector('input[name="pickupFirst"]:checked');
     const returnRide = form.querySelector('input[name="returnRide"]:checked');
 
@@ -644,7 +660,6 @@ const CONFIG = {
     if (!lastName)  { $('f-last').classList.add('invalid');  showError('צריך למלא שם משפחה.', $('lastName')); return null; }
     if (!phone) { $('f-phone').classList.add('invalid'); showError('צריך למלא מספר טלפון.', $('phone')); return null; }
     if (digits.length < 9 || digits.length > 15) { $('f-phone').classList.add('invalid'); showError('מספר הטלפון לא נראה תקין — בדקו אותו שוב.', $('phone')); return null; }
-    if (plusOne.checked && !partner) { $('f-plusone').classList.add('invalid'); showError('מלאו את שם בן/בת הזוג, או הסירו את הסימון.', partnerName); return null; }
     if (!pickupFirst) { $('f-pickup').classList.add('invalid'); showError('בחרו תחנת עלייה אחת.', $('pickup-0')); return null; }
     if (!returnRide)  { $('f-return').classList.add('invalid'); showError('ענו אם צריך גם הסעה חזור.'); return null; }
 
